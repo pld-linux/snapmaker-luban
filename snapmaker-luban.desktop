@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Snapmaker Luban
+Comment=Easy-to-use 3-in-1 software tailor-made for Snapmaker machines.
+Exec=/usr/bin/snapmaker-luban %U
+Terminal=false
+Type=Application
+Icon=snapmaker-luban
+Categories=Utility;
