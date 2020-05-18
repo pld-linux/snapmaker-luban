@@ -10,6 +10,7 @@ Source2:	%{name}.desktop
 Source3:	%{name}.png
 URL:		https://snapmaker.com/
 BuildRequires:	ImageMagick
+BuildRequires:	rpmbuild(macros) >= 1.747
 Obsoletes:	snapmakerjs
 ExclusiveArch:	%{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -45,9 +46,6 @@ done
 
 cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_iconsdir}/hicolor/256x256/apps
-
-# _install_post_check_shebangs can't cope with filenames with spaces
-find $RPM_BUILD_ROOT -name "Apache License.txt" -print0 | xargs -0 %{__rm}
 
 ls -1 locales | \
 	%{__sed} -e 's,^\([a-z][a-z]\)\.pak,%lang(\1) %{_libdir}/%{name}/locales/\1.pak,' \
