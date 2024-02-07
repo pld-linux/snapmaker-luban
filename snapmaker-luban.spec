@@ -1,11 +1,11 @@
 Summary:	Easy-to-use 3-in-1 software tailor-made for Snapmaker machines
 Name:		snapmaker-luban
-Version:	3.4.2
+Version:	4.10.2
 Release:	1
 License:	AGPL v3
 Group:		Applications
 Source0:	https://github.com/Snapmaker/Luban/releases/download/v%{version}/%{name}-%{version}-linux-x64.tar.gz
-# Source0-md5:	edebbd32e4b3f2f2d3736cabbe8e8967
+# Source0-md5:	327125f188ac897333ac5eb814c17012
 Source2:	%{name}.desktop
 Source3:	%{name}.png
 URL:		https://snapmaker.com/
@@ -37,12 +37,17 @@ install -d $RPM_BUILD_ROOT{%{_libdir}/%{name},%{_bindir},%{_desktopdir}} \
 	$RPM_BUILD_ROOT%{_iconsdir}/hicolor/256x256/apps
 
 cp -a * $RPM_BUILD_ROOT%{_libdir}/%{name}
-ln -s %{_libdir}/%{name}/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
+ln -sr $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 for i in 16 24 32 48 64 96 128 ; do
   install -d $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps
   convert -geometry ${i}x${i} %{SOURCE3} $RPM_BUILD_ROOT%{_iconsdir}/hicolor/${i}x${i}/apps/%{name}.png
 done
+
+# Remove nodejs junk
+%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/%{name}/resources/app/node_modules/@serialport/bindings-cpp/prebuilds/{android,darwin,win32}-*
+%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/%{name}/resources/app/node_modules/@serialport/bindings-cpp/prebuilds/*-arm*
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/resources/app/node_modules/@serialport/bindings-cpp/prebuilds/*/node.napi.musl.node
 
 cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_iconsdir}/hicolor/256x256/apps
@@ -70,46 +75,27 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/locales/en-GB.pak
 %{_libdir}/%{name}/locales/en-US.pak
 %lang(es) %{_libdir}/%{name}/locales/es-419.pak
-%{_libdir}/%{name}/locales/fake-bidi.pak
 %{_libdir}/%{name}/locales/fil.pak
 %dir %{_libdir}/%{name}/resources
-%{_libdir}/%{name}/resources/electron.asar
 %dir %{_libdir}/%{name}/resources/app
-%{_libdir}/%{name}/resources/app/app
-%{_libdir}/%{name}/resources/app/electron-app
 %{_libdir}/%{name}/resources/app/node_modules
-%{_libdir}/%{name}/resources/app/*.js
+%{_libdir}/%{name}/resources/app/resources
+%{_libdir}/%{name}/resources/app/src
 %{_libdir}/%{name}/resources/app/*.json
-%dir %{_libdir}/%{name}/resources/app/resources
-%{_libdir}/%{name}/resources/app/resources/fonts
-%dir %{_libdir}/%{name}/resources/app/resources/CuraEngine
-%{_libdir}/%{name}/resources/app/resources/CuraEngine/Config
-%dir %{_libdir}/%{name}/resources/app/resources/CuraEngine/3.6
-%dir %{_libdir}/%{name}/resources/app/resources/CuraEngine/3.6/Linux
-%attr(755,root,root) %{_libdir}/%{name}/resources/app/resources/CuraEngine/3.6/Linux/CuraEngine
-%{_libdir}/%{name}/resources/app/resources/user-case
-%dir %{_libdir}/%{name}/resources/app/server
-%{_libdir}/%{name}/resources/app/server/index.js
-%dir %{_libdir}/%{name}/resources/app/server/i18n
-%lang(cs) %{_libdir}/%{name}/resources/app/server/i18n/cs
-%lang(de) %{_libdir}/%{name}/resources/app/server/i18n/de
-%lang(en) %{_libdir}/%{name}/resources/app/server/i18n/en
-%lang(es) %{_libdir}/%{name}/resources/app/server/i18n/es
-%lang(fr) %{_libdir}/%{name}/resources/app/server/i18n/fr
-%lang(hu) %{_libdir}/%{name}/resources/app/server/i18n/hu
-%lang(it) %{_libdir}/%{name}/resources/app/server/i18n/it
-%lang(ja) %{_libdir}/%{name}/resources/app/server/i18n/ja
-%lang(pt_BR) %{_libdir}/%{name}/resources/app/server/i18n/pt-br
-%lang(ru) %{_libdir}/%{name}/resources/app/server/i18n/ru
-%lang(zh_CN) %{_libdir}/%{name}/resources/app/server/i18n/zh-cn
-%lang(zh_TW) %{_libdir}/%{name}/resources/app/server/i18n/zh-tw
-%{_libdir}/%{name}/resources/app/server/views
 %{_libdir}/%{name}/*.dat
 %{_libdir}/%{name}/*.bin
+%{_libdir}/%{name}/*.json
 %{_libdir}/%{name}/*.pak
-%attr(755,root,root) %{_libdir}/%{name}/libffmpeg.so
-%attr(755,root,root) %{_libdir}/%{name}/libnode.so
 %attr(755,root,root) %{_libdir}/%{name}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/chrome_crashpad_handler
+%attr(755,root,root) %{_libdir}/%{name}/chrome-sandbox
+%attr(755,root,root) %{_libdir}/%{name}/libEGL.so
+%attr(755,root,root) %{_libdir}/%{name}/libffmpeg.so
+%attr(755,root,root) %{_libdir}/%{name}/libGLESv2.so
+%attr(755,root,root) %{_libdir}/%{name}/libvk_swiftshader.so
+%attr(755,root,root) %{_libdir}/%{name}/libvulkan.so.1
+%dir %{_libdir}/%{name}/swiftshader
+%attr(755,root,root) %{_libdir}/%{name}/swiftshader/libEGL.so
+%attr(755,root,root) %{_libdir}/%{name}/swiftshader/libGLESv2.so
 %{_desktopdir}/%{name}.desktop
 %{_iconsdir}/hicolor/*x*/apps/%{name}.png
-
