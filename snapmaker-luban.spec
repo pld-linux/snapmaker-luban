@@ -1,7 +1,7 @@
 Summary:	Easy-to-use 3-in-1 software tailor-made for Snapmaker machines
 Name:		snapmaker-luban
 Version:	4.10.2
-Release:	1
+Release:	2
 License:	AGPL v3
 Group:		Applications
 Source0:	https://github.com/Snapmaker/Luban/releases/download/v%{version}/%{name}-%{version}-linux-x64.tar.gz
@@ -78,7 +78,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/locales/fil.pak
 %dir %{_libdir}/%{name}/resources
 %dir %{_libdir}/%{name}/resources/app
-%{_libdir}/%{name}/resources/app/node_modules
+%{_libdir}/%{name}/resources/app/node_modules/@[a-rt-z]*
+%{_libdir}/%{name}/resources/app/node_modules/@serialport
+%{_libdir}/%{name}/resources/app/node_modules/@socket.io
+%dir %{_libdir}/%{name}/resources/app/node_modules/@snapmaker
+%dir %{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar
+%dir %{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar/engine
+%dir %{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar/engine/Linux
+%attr(755,root,root) %{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar/engine/Linux/Lunar*
+%{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-sacp-sdk
+%{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar/src
+%{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar/LICENSE
+%{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar/package.json
+%{_libdir}/%{name}/resources/app/node_modules/@snapmaker/snapmaker-lunar/postinstall.js
+%{_libdir}/%{name}/resources/app/node_modules/[a-rt-z]*
+%{_libdir}/%{name}/resources/app/node_modules/s[a-mo-z]*
+%dir %{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine
+%dir %{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine/engine
+%dir %{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine/engine/Linux
+%attr(755,root,root) %{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine/engine/Linux/LubanEngine
+%{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine/lib
+%{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine/LICENSE
+%{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine/package.json
+%{_libdir}/%{name}/resources/app/node_modules/snapmaker-luban-engine/postinstall.js
 %{_libdir}/%{name}/resources/app/resources
 %{_libdir}/%{name}/resources/app/src
 %{_libdir}/%{name}/resources/app/*.json
