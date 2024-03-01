@@ -1,9 +1,11 @@
+# TODO: try not to use prebuilt binaries
 Summary:	Easy-to-use 3-in-1 software tailor-made for Snapmaker machines
+Summary(pl.UTF-8):	Łatwe w użyciu oprogramowanie "trzy w jednym do obrabiarek Snapmaker
 Name:		snapmaker-luban
 Version:	4.10.2
-Release:	2
+Release:	3
 License:	AGPL v3
-Group:		Applications
+Group:		Applications/Engineering
 Source0:	https://github.com/Snapmaker/Luban/releases/download/v%{version}/%{name}-%{version}-linux-x64.tar.gz
 # Source0-md5:	327125f188ac897333ac5eb814c17012
 Source2:	%{name}.desktop
@@ -11,7 +13,7 @@ Source3:	%{name}.png
 URL:		https://snapmaker.com/
 BuildRequires:	ImageMagick
 BuildRequires:	rpmbuild(macros) >= 1.747
-Obsoletes:	snapmakerjs
+Obsoletes:	snapmakerjs < 3
 ExclusiveArch:	%{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -26,10 +28,15 @@ the machine using the command panel in Luban anytime with ease.
 The software also provides G-code generation support for 3D models,
 laser engraving / cutting, and CNC milling.
 
+%description -l pl.UTF-8
+Snapmaker Luban to łatwe w użyciu oprogramowanie "trzy w jednym"
+skrojone pod obrabiarki Snapmaker. Pozwala łatwo, w dowolnej chwili
+dostosowywać ustawienia drukarki i sterować obrabiarką z panelu
+poleceń Luban. Oprogramowanie zapewnia także generowanie G-kodu do
+modeli 3D, laserowe rzeźbienie i cięcie oraz frezowanie CNC.
+
 %prep
 %setup -q -T -b0 -n %{name}-%{version}-linux-x64
-
-%build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -78,6 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/locales/fil.pak
 %dir %{_libdir}/%{name}/resources
 %dir %{_libdir}/%{name}/resources/app
+%dir %{_libdir}/%{name}/resources/app/node_modules
 %{_libdir}/%{name}/resources/app/node_modules/@[a-rt-z]*
 %{_libdir}/%{name}/resources/app/node_modules/@serialport
 %{_libdir}/%{name}/resources/app/node_modules/@socket.io
